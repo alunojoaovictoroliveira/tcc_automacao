@@ -26,6 +26,22 @@
         "name": "",
         "vartable": [
             {
+                "addr": "DB1,INT0",
+                "name": "LT3023_NIVEL"
+            },
+            {
+                "addr": "DB1,INT2",
+                "name": "LT3023_TEMPERATURA"
+            },
+            {
+                "addr": "DB1,INT4",
+                "name": "DP2200_CORRENTE"
+            },
+            {
+                "addr": "DB1,INT6",
+                "name": "DP2200_STATUS"
+            },
+            {
                 "addr": "DB1,INT8",
                 "name": "PN2594_PRESSAO"
             },
@@ -38,32 +54,16 @@
                 "name": "PN2594_OUT_2"
             },
             {
-                "addr": "DB1,INT4",
-                "name": "DP2200_CORRENTE"
-            },
-            {
-                "addr": "DB1,INT6",
-                "name": "DP2200_STATUS"
-            },
-            {
-                "addr": "DB1,INT0",
-                "name": "LT3023_NIVEL"
-            },
-            {
-                "addr": "DB1,INT2",
-                "name": "LT3023_TEMPERATURA"
-            },
-            {
-                "addr": "DB1,INT12",
-                "name": "LMT100_CAPACITANCIA"
-            },
-            {
                 "addr": "DB1,X10.2",
                 "name": "LMT100_NA"
             },
             {
                 "addr": "DB1,X10.3",
                 "name": "LMT100_NF"
+            },
+            {
+                "addr": "DB1,INT12",
+                "name": "LMT100_CAPACITANCIA"
             },
             {
                 "addr": "I1.0",
@@ -112,8 +112,31 @@
             {
                 "addr": "Q0.5",
                 "name": "RELE_INTERFACE_3"
+            },
+            {
+                "addr": "Q0.6",
+                "name": "DI0_INV"
+            },
+            {
+                "addr": "Q0.7",
+                "name": "DI2_INV"
             }
         ]
+    },
+    {
+        "id": "80dd8b00ba5af475",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "Banco de Dados",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
     },
     {
         "id": "dd97e7298cb05004",
@@ -122,7 +145,7 @@
         "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
         "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
         "x": 350,
-        "y": 80,
+        "y": 100,
         "wires": []
     },
     {
@@ -134,29 +157,31 @@
         "variable": "",
         "diff": true,
         "name": "TODAS_AS_VARIAVEIS",
-        "x": 190,
-        "y": 540,
+        "x": 110,
+        "y": 560,
         "wires": [
-            []
+            [
+                "b8e6909cedeb4998"
+            ]
         ]
     },
     {
         "id": "b8e6909cedeb4998",
         "type": "function",
         "z": "6389565af1344548",
-        "name": "function 3",
-        "func": "// 1. Ignora mensagens de erro ou payloads inválidos\nif (msg.error || typeof msg.payload !== \"object\" || msg.payload === null) {\n    return null; // Interrompe o fluxo desta mensagem sem gerar erro\n}\n\n// 2. Atualiza apenas as chaves válidas (ignora valores null ou undefined)\nfor (let chave in msg.payload) {\n    let valor = msg.payload[chave];\n    if (valor !== null && valor !== undefined) {\n        flow.set(chave, valor);\n    }\n}\n\n// 3. Monta o JSON estruturado\nlet dados = {\n    PN2594: {\n        PRESSAO: flow.get(\"PN2594_PRESSAO\"),\n        SP1: flow.get(\"PN2594_SP1\"),\n        OUT_2: flow.get(\"PN2594_OUT_2\")\n    },\n    DP2200: {\n        CORRENTE: flow.get(\"DP2200_CORRENTE\"),\n        STATUS: flow.get(\"DP2200_STATUS\")\n    },\n    LT3023: {\n        NIVEL: flow.get(\"LT3023_NIVEL\"),\n        TEMPERATURA: flow.get(\"LT3023_TEMPERATURA\")\n    },\n    LMT100: {\n        CAPACITANCIA: flow.get(\"LMT100_CAPACITANCIA\"),\n        NA: flow.get(\"LMT100_NA\"),\n        NF: flow.get(\"LMT100_NF\")\n    },\n    ENTRADAS_CLP: {\n        STATUS_B_EMER: flow.get(\"STATUS_B_EMER\"),\n        STATUS_B_LIGA: flow.get(\"STATUS_B_LIGA\"),\n        STATUS_B_DESLIGA: flow.get(\"STATUS_B_DESLIGA\"),\n        STATUS_B_RESET: flow.get(\"STATUS_B_RESET\"),\n        STATUS_DO0_INV: flow.get(\"STATUS_DO0_INV\"),\n        STATUS_DO2_INV: flow.get(\"STATUS_DO2_INV\")\n    },\n    SAIDAS_CLP: {\n        LED_B_LIGA: flow.get(\"LED_B_LIGA\"),\n        LED_B_DESLIGA: flow.get(\"LED_B_DESLIGA\"),\n        LED_B_RESET: flow.get(\"LED_B_RESET\"),\n        ACIONA_VALVULA: flow.get(\"ACIONA_VALVULA\"),\n        RELE_INTERFACE_2: flow.get(\"RELE_INTERFACE_2\"),\n        RELE_INTERFACE_3: flow.get(\"RELE_INTERFACE_3\")\n    }\n};\n\n// 4. Verifica se alguma variável ainda não recebeu o primeiro valor (undefined)\n// Se ainda estiver aguardando algum nó comunicar na inicialização, não envia o JSON\nfor (let grupo in dados) {\n    for (let tag in dados[grupo]) {\n        if (dados[grupo][tag] === undefined) {\n            return null;\n        }\n    }\n}\n\nmsg.payload = dados;\nreturn msg;",
+        "name": "DATA_TO_JSON",
+        "func": "// 1. Ignora mensagens de erro ou payloads inválidos\nif (msg.error || typeof msg.payload !== \"object\" || msg.payload === null) {\n    return null; // Interrompe o fluxo desta mensagem sem gerar erro\n}\n\n// 2. Atualiza apenas as chaves válidas (ignora valores null ou undefined)\nfor (let chave in msg.payload) {\n    let valor = msg.payload[chave];\n    if (valor !== null && valor !== undefined) {\n        flow.set(chave, valor);\n    }\n}\n\n// 3. Monta o JSON estruturado\nlet dados = {\n    PN2594: {\n        PRESSAO: flow.get(\"PN2594_PRESSAO\"),\n        SP1: flow.get(\"PN2594_SP1\"),\n        OUT_2: flow.get(\"PN2594_OUT_2\")\n    },\n    DP2200: {\n        CORRENTE: flow.get(\"DP2200_CORRENTE\"),\n        STATUS: flow.get(\"DP2200_STATUS\")\n    },\n    LT3023: {\n        NIVEL: flow.get(\"LT3023_NIVEL\"),\n        TEMPERATURA: flow.get(\"LT3023_TEMPERATURA\")\n    },\n    LMT100: {\n        CAPACITANCIA: flow.get(\"LMT100_CAPACITANCIA\"),\n        NA: flow.get(\"LMT100_NA\"),\n        NF: flow.get(\"LMT100_NF\")\n    },\n    ENTRADAS_CLP: {\n        STATUS_B_EMER: flow.get(\"STATUS_B_EMER\"),\n        STATUS_B_LIGA: flow.get(\"STATUS_B_LIGA\"),\n        STATUS_B_DESLIGA: flow.get(\"STATUS_B_DESLIGA\"),\n        STATUS_B_RESET: flow.get(\"STATUS_B_RESET\"),\n        STATUS_DO0_INV: flow.get(\"STATUS_DO0_INV\"),\n        STATUS_DO2_INV: flow.get(\"STATUS_DO2_INV\")\n    },\n    SAIDAS_CLP: {\n        LED_B_LIGA: flow.get(\"LED_B_LIGA\"),\n        LED_B_DESLIGA: flow.get(\"LED_B_DESLIGA\"),\n        LED_B_RESET: flow.get(\"LED_B_RESET\"),\n        ACIONA_VALVULA: flow.get(\"ACIONA_VALVULA\"),\n        RELE_INTERFACE_2: flow.get(\"RELE_INTERFACE_2\"),\n        RELE_INTERFACE_3: flow.get(\"RELE_INTERFACE_3\"),\n        DI0_INV: flow.get(\"DI0_INV\"),\n        DI2_INV: flow.get(\"DI2_INV\")\n    }\n};\n\n// 4. Verifica se alguma variável ainda não recebeu o primeiro valor (undefined)\n// Se ainda estiver aguardando algum nó comunicar na inicialização, não envia o JSON\nfor (let grupo in dados) {\n    for (let tag in dados[grupo]) {\n        if (dados[grupo][tag] === undefined) {\n            return null;\n        }\n    }\n}\n\nmsg.payload = dados;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 540,
+        "x": 330,
+        "y": 560,
         "wires": [
             [
-                "27b5ec34ea77b838"
+                "cb28b355867d5abf"
             ]
         ]
     },
@@ -169,11 +194,106 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 620,
-        "y": 540,
+        "x": 740,
+        "y": 560,
         "wires": []
+    },
+    {
+        "id": "cb28b355867d5abf",
+        "type": "function",
+        "z": "6389565af1344548",
+        "name": "ORGANIZE_DATA",
+        "func": "const d = msg.payload;\nconst toNum = (val) => (val === true || val === 1) ? 1 : 0;\n\n// 1. Saída 1: Sensores Analógicos\nconst msgAnalogicos = {\n    measurement: \"sensores_analogicos\",\n    payload: [\n        {\n            nivel: Number(d.LT3023.NIVEL),\n            temperatura: Number(d.LT3023.TEMPERATURA),\n            corrente: Number(d.DP2200.CORRENTE),\n            dp2200_status: Number(d.DP2200.STATUS),\n            pressao: Number(d.PN2594.PRESSAO),\n            capacitancia: Number(d.LMT100.CAPACITANCIA)\n        },\n        { bancada: \"didatica_01\" }\n    ]\n};\n\n// 2. Saída 2: Sensores Digitais\nconst msgDigitaisSensores = {\n    measurement: \"sensores_digitais\",\n    payload: [\n        {\n            pn2594_sp1: toNum(d.PN2594.SP1),\n            pn2594_out2: toNum(d.PN2594.OUT_2),\n            lmt100_na: toNum(d.LMT100.NA),\n            lmt100_nf: toNum(d.LMT100.NF)\n        },\n        { bancada: \"didatica_01\" }\n    ]\n};\n\n// 3. Saída 3: Entradas e Saídas do CLP\nconst msgCLP = {\n    measurement: \"clp_io\",\n    payload: [\n        {\n            // Entradas\n            status_emer: toNum(d.ENTRADAS_CLP.STATUS_B_EMER),\n            status_liga: toNum(d.ENTRADAS_CLP.STATUS_B_LIGA),\n            status_desliga: toNum(d.ENTRADAS_CLP.STATUS_B_DESLIGA),\n            status_reset: toNum(d.ENTRADAS_CLP.STATUS_B_RESET),\n            status_do0_inv: toNum(d.ENTRADAS_CLP.STATUS_DO0_INV),\n            status_do2_inv: toNum(d.ENTRADAS_CLP.STATUS_DO2_INV),\n            // Saídas\n            led_liga: toNum(d.SAIDAS_CLP.LED_B_LIGA),\n            led_desliga: toNum(d.SAIDAS_CLP.LED_B_DESLIGA),\n            led_reset: toNum(d.SAIDAS_CLP.LED_B_RESET),\n            aciona_valvula: toNum(d.SAIDAS_CLP.ACIONA_VALVULA),\n            rele_2: toNum(d.SAIDAS_CLP.RELE_INTERFACE_2),\n            rele_3: toNum(d.SAIDAS_CLP.RELE_INTERFACE_3),\n            di0_inv: toNum(d.SAIDAS_CLP.DI0_INV),\n            di2_inv: toNum(d.SAIDAS_CLP.DI2_INV)\n        },\n        { bancada: \"didatica_01\" }\n    ]\n};\n\nreturn [msgAnalogicos, msgDigitaisSensores, msgCLP];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 560,
+        "wires": [
+            [
+                "27b5ec34ea77b838",
+                "98b4b6473cbc61c2"
+            ],
+            [
+                "27b5ec34ea77b838",
+                "98b4b6473cbc61c2"
+            ],
+            [
+                "27b5ec34ea77b838",
+                "98b4b6473cbc61c2"
+            ]
+        ]
+    },
+    {
+        "id": "98b4b6473cbc61c2",
+        "type": "influxdb out",
+        "z": "6389565af1344548",
+        "influxdb": "80dd8b00ba5af475",
+        "name": "InfluxDB TCC",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "SENAI_TTAUT",
+        "bucket": "DADOS_AUTOMAZOOM",
+        "x": 760,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "782dccd2e29f1a97",
+        "type": "function",
+        "z": "6389565af1344548",
+        "name": "function 1",
+        "func": "\n// Gera um número inteiro aleatório de 0 a 20\nconst valorAleatorio = Math.floor(Math.random() * 21);\n\n// Define um measurement exclusivo de teste (para não sujar seus dados reais)\nmsg.measurement = \"teste_simulacao\";\n\n// Formato padrão esperado pelo nó influxdb out: [ { fields }, { tags } ]\nmsg.payload = [\n    {\n        valor_teste: valorAleatorio\n    },\n    {\n        bancada: \"simulacao_casa\"\n    }\n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa7462b2d7a68a41",
+        "type": "inject",
+        "z": "6389565af1344548",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 390,
+        "y": 640,
+        "wires": [
+            [
+                "782dccd2e29f1a97"
+            ]
+        ]
     }
 ]
