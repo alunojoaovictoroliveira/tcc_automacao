@@ -1,0 +1,43 @@
+services:
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered_clp
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    environment:
+      - TZ=America/Sao_Paulo
+    volumes:
+      - ./nodered_data:/data
+    depends_on:
+      - influxdb
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb_clp
+    restart: unless-stopped
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=joao_oliveira56
+      - DOCKER_INFLUXDB_INIT_PASSWORD=160210jvo
+      - DOCKER_INFLUXDB_INIT_ORG=SENAI_TTAUT
+      - DOCKER_INFLUXDB_INIT_BUCKET=DADOS_AUTOMAZOOM
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=TOKEN_TCC_SENAI_AUTOMACAO
+    volumes:
+      - ./influxdb_data:/var/lib/influxdb2
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana_clp
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=joao_oliveira56
+      - GF_SECURITY_ADMIN_PASSWORD=160210jvo
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+    depends_on:
+      - influxdb

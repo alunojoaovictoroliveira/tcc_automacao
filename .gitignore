@@ -1,0 +1,12 @@
+﻿influxdb_data/
+grafana_data/
+nodered_data/node_modules/
+nodered_data/.config*
+nodered_data/*.backup
+.env
+*.log
+.DS_Store
+Thumbs.db
+__pycache__/
+*.venv/
+venv/

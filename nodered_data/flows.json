@@ -1,0 +1,179 @@
+[
+    {
+        "id": "6389565af1344548",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "eeab3eb1b5f288f0",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "10.26.92.207",
+        "port": "102",
+        "rack": "0",
+        "slot": "0",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": "2",
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "",
+        "vartable": [
+            {
+                "addr": "DB1,INT8",
+                "name": "PN2594_PRESSAO"
+            },
+            {
+                "addr": "DB1,X10.0",
+                "name": "PN2594_SP1"
+            },
+            {
+                "addr": "DB1,X10.1",
+                "name": "PN2594_OUT_2"
+            },
+            {
+                "addr": "DB1,INT4",
+                "name": "DP2200_CORRENTE"
+            },
+            {
+                "addr": "DB1,INT6",
+                "name": "DP2200_STATUS"
+            },
+            {
+                "addr": "DB1,INT0",
+                "name": "LT3023_NIVEL"
+            },
+            {
+                "addr": "DB1,INT2",
+                "name": "LT3023_TEMPERATURA"
+            },
+            {
+                "addr": "DB1,INT12",
+                "name": "LMT100_CAPACITANCIA"
+            },
+            {
+                "addr": "DB1,X10.2",
+                "name": "LMT100_NA"
+            },
+            {
+                "addr": "DB1,X10.3",
+                "name": "LMT100_NF"
+            },
+            {
+                "addr": "I1.0",
+                "name": "STATUS_B_EMER"
+            },
+            {
+                "addr": "I1.1",
+                "name": "STATUS_B_LIGA"
+            },
+            {
+                "addr": "I1.2",
+                "name": "STATUS_B_DESLIGA"
+            },
+            {
+                "addr": "I1.3",
+                "name": "STATUS_B_RESET"
+            },
+            {
+                "addr": "I1.4",
+                "name": "STATUS_DO0_INV"
+            },
+            {
+                "addr": "I1.5",
+                "name": "STATUS_DO2_INV"
+            },
+            {
+                "addr": "Q0.0",
+                "name": "LED_B_LIGA"
+            },
+            {
+                "addr": "Q0.1",
+                "name": "LED_B_DESLIGA"
+            },
+            {
+                "addr": "Q0.2",
+                "name": "LED_B_RESET"
+            },
+            {
+                "addr": "Q0.3",
+                "name": "ACIONA_VALVULA"
+            },
+            {
+                "addr": "Q0.4",
+                "name": "RELE_INTERFACE_2"
+            },
+            {
+                "addr": "Q0.5",
+                "name": "RELE_INTERFACE_3"
+            }
+        ]
+    },
+    {
+        "id": "dd97e7298cb05004",
+        "type": "comment",
+        "z": "6389565af1344548",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7baecaa96b1672c4",
+        "type": "s7 in",
+        "z": "6389565af1344548",
+        "endpoint": "eeab3eb1b5f288f0",
+        "mode": "all",
+        "variable": "",
+        "diff": true,
+        "name": "TODAS_AS_VARIAVEIS",
+        "x": 190,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b8e6909cedeb4998",
+        "type": "function",
+        "z": "6389565af1344548",
+        "name": "function 3",
+        "func": "// 1. Ignora mensagens de erro ou payloads inválidos\nif (msg.error || typeof msg.payload !== \"object\" || msg.payload === null) {\n    return null; // Interrompe o fluxo desta mensagem sem gerar erro\n}\n\n// 2. Atualiza apenas as chaves válidas (ignora valores null ou undefined)\nfor (let chave in msg.payload) {\n    let valor = msg.payload[chave];\n    if (valor !== null && valor !== undefined) {\n        flow.set(chave, valor);\n    }\n}\n\n// 3. Monta o JSON estruturado\nlet dados = {\n    PN2594: {\n        PRESSAO: flow.get(\"PN2594_PRESSAO\"),\n        SP1: flow.get(\"PN2594_SP1\"),\n        OUT_2: flow.get(\"PN2594_OUT_2\")\n    },\n    DP2200: {\n        CORRENTE: flow.get(\"DP2200_CORRENTE\"),\n        STATUS: flow.get(\"DP2200_STATUS\")\n    },\n    LT3023: {\n        NIVEL: flow.get(\"LT3023_NIVEL\"),\n        TEMPERATURA: flow.get(\"LT3023_TEMPERATURA\")\n    },\n    LMT100: {\n        CAPACITANCIA: flow.get(\"LMT100_CAPACITANCIA\"),\n        NA: flow.get(\"LMT100_NA\"),\n        NF: flow.get(\"LMT100_NF\")\n    },\n    ENTRADAS_CLP: {\n        STATUS_B_EMER: flow.get(\"STATUS_B_EMER\"),\n        STATUS_B_LIGA: flow.get(\"STATUS_B_LIGA\"),\n        STATUS_B_DESLIGA: flow.get(\"STATUS_B_DESLIGA\"),\n        STATUS_B_RESET: flow.get(\"STATUS_B_RESET\"),\n        STATUS_DO0_INV: flow.get(\"STATUS_DO0_INV\"),\n        STATUS_DO2_INV: flow.get(\"STATUS_DO2_INV\")\n    },\n    SAIDAS_CLP: {\n        LED_B_LIGA: flow.get(\"LED_B_LIGA\"),\n        LED_B_DESLIGA: flow.get(\"LED_B_DESLIGA\"),\n        LED_B_RESET: flow.get(\"LED_B_RESET\"),\n        ACIONA_VALVULA: flow.get(\"ACIONA_VALVULA\"),\n        RELE_INTERFACE_2: flow.get(\"RELE_INTERFACE_2\"),\n        RELE_INTERFACE_3: flow.get(\"RELE_INTERFACE_3\")\n    }\n};\n\n// 4. Verifica se alguma variável ainda não recebeu o primeiro valor (undefined)\n// Se ainda estiver aguardando algum nó comunicar na inicialização, não envia o JSON\nfor (let grupo in dados) {\n    for (let tag in dados[grupo]) {\n        if (dados[grupo][tag] === undefined) {\n            return null;\n        }\n    }\n}\n\nmsg.payload = dados;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 540,
+        "wires": [
+            [
+                "27b5ec34ea77b838"
+            ]
+        ]
+    },
+    {
+        "id": "27b5ec34ea77b838",
+        "type": "debug",
+        "z": "6389565af1344548",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 540,
+        "wires": []
+    }
+]
