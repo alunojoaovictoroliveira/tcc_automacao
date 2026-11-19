@@ -1,0 +1,597 @@
+[
+  {
+    "apiVersion": "influxdata.com/v2alpha1",
+    "kind": "Dashboard",
+    "metadata": {
+      "name": "dashboard-analogicos"
+    },
+    "spec": {
+      "name": "Dashboard Analógicos",
+      "description": "Sensores analógicos - DADOS_AUTOMAZOOM",
+      "charts": [
+        {
+          "kind": "Gauge",
+          "name": "nivel - Gauge",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"nivel\")\n  |> last()\n  |> yield(name: \"last\")"
+            }
+          ],
+          "colors": [
+            {
+              "name": "green",
+              "type": "min",
+              "hex": "#7CE490",
+              "value": 0
+            },
+            {
+              "name": "yellow",
+              "type": "threshold",
+              "hex": "#FFD255",
+              "value": 27.3
+            },
+            {
+              "name": "red",
+              "type": "max",
+              "hex": "#F95F53",
+              "value": 39
+            }
+          ],
+          "prefix": "",
+          "suffix": "",
+          "decimalPlaces": {
+            "isEnforced": true,
+            "digits": 2
+          },
+          "tickPrefix": "",
+          "tickSuffix": "",
+          "width": 4,
+          "height": 4,
+          "xPos": 0,
+          "yPos": 0
+        },
+        {
+          "kind": "Xy",
+          "name": "nivel - Histórico",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"nivel\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "nivel",
+              "base": "10",
+              "scale": "linear"
+            }
+          ],
+          "geom": "line",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 8,
+          "height": 4,
+          "xPos": 4,
+          "yPos": 0
+        },
+        {
+          "kind": "Gauge",
+          "name": "pressao - Gauge",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"pressao\")\n  |> last()\n  |> yield(name: \"last\")"
+            }
+          ],
+          "colors": [
+            {
+              "name": "green",
+              "type": "min",
+              "hex": "#7CE490",
+              "value": 0
+            },
+            {
+              "name": "yellow",
+              "type": "threshold",
+              "hex": "#FFD255",
+              "value": 7
+            },
+            {
+              "name": "red",
+              "type": "max",
+              "hex": "#F95F53",
+              "value": 10
+            }
+          ],
+          "prefix": "",
+          "suffix": "",
+          "decimalPlaces": {
+            "isEnforced": true,
+            "digits": 2
+          },
+          "tickPrefix": "",
+          "tickSuffix": "",
+          "width": 4,
+          "height": 4,
+          "xPos": 0,
+          "yPos": 4
+        },
+        {
+          "kind": "Xy",
+          "name": "pressao - Histórico",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"pressao\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "pressao",
+              "base": "10",
+              "scale": "linear"
+            }
+          ],
+          "geom": "line",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 8,
+          "height": 4,
+          "xPos": 4,
+          "yPos": 4
+        },
+        {
+          "kind": "Gauge",
+          "name": "temperatura - Gauge",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"temperatura\")\n  |> last()\n  |> yield(name: \"last\")"
+            }
+          ],
+          "colors": [
+            {
+              "name": "green",
+              "type": "min",
+              "hex": "#7CE490",
+              "value": -20
+            },
+            {
+              "name": "yellow",
+              "type": "threshold",
+              "hex": "#FFD255",
+              "value": 57
+            },
+            {
+              "name": "red",
+              "type": "max",
+              "hex": "#F95F53",
+              "value": 90
+            }
+          ],
+          "prefix": "",
+          "suffix": " °C",
+          "decimalPlaces": {
+            "isEnforced": true,
+            "digits": 2
+          },
+          "tickPrefix": "",
+          "tickSuffix": " °C",
+          "width": 4,
+          "height": 4,
+          "xPos": 0,
+          "yPos": 8
+        },
+        {
+          "kind": "Xy",
+          "name": "temperatura - Histórico",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"temperatura\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "temperatura",
+              "base": "10",
+              "scale": "linear"
+            }
+          ],
+          "geom": "line",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 8,
+          "height": 4,
+          "xPos": 4,
+          "yPos": 8
+        },
+        {
+          "kind": "Gauge",
+          "name": "corrente - Gauge",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"corrente\")\n  |> last()\n  |> yield(name: \"last\")"
+            }
+          ],
+          "colors": [
+            {
+              "name": "green",
+              "type": "min",
+              "hex": "#7CE490",
+              "value": 4000
+            },
+            {
+              "name": "yellow",
+              "type": "threshold",
+              "hex": "#FFD255",
+              "value": 15200
+            },
+            {
+              "name": "red",
+              "type": "max",
+              "hex": "#F95F53",
+              "value": 20000
+            }
+          ],
+          "prefix": "",
+          "suffix": "",
+          "decimalPlaces": {
+            "isEnforced": true,
+            "digits": 2
+          },
+          "tickPrefix": "",
+          "tickSuffix": "",
+          "width": 4,
+          "height": 4,
+          "xPos": 0,
+          "yPos": 12
+        },
+        {
+          "kind": "Xy",
+          "name": "corrente - Histórico",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"corrente\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "corrente",
+              "base": "10",
+              "scale": "linear"
+            }
+          ],
+          "geom": "line",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 8,
+          "height": 4,
+          "xPos": 4,
+          "yPos": 12
+        },
+        {
+          "kind": "Single_Stat",
+          "name": "dp2200_status - Estado (word)",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"dp2200_status\")\n  |> last()\n  |> yield(name: \"last\")"
+            }
+          ],
+          "colors": [
+            {
+              "name": "text",
+              "type": "text",
+              "hex": "#00C9FF",
+              "value": 0
+            }
+          ],
+          "prefix": "",
+          "suffix": "",
+          "decimalPlaces": {
+            "isEnforced": true,
+            "digits": 0
+          },
+          "width": 4,
+          "height": 4,
+          "xPos": 0,
+          "yPos": 16
+        },
+        {
+          "kind": "Xy",
+          "name": "dp2200_status - Histórico",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"dp2200_status\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "dp2200_status",
+              "base": "10",
+              "scale": "linear"
+            }
+          ],
+          "geom": "line",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 8,
+          "height": 4,
+          "xPos": 4,
+          "yPos": 16
+        },
+        {
+          "kind": "Gauge",
+          "name": "capacitancia - Gauge",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"capacitancia\")\n  |> last()\n  |> yield(name: \"last\")"
+            }
+          ],
+          "colors": [
+            {
+              "name": "green",
+              "type": "min",
+              "hex": "#7CE490",
+              "value": 0
+            },
+            {
+              "name": "yellow",
+              "type": "threshold",
+              "hex": "#FFD255",
+              "value": 70.0
+            },
+            {
+              "name": "red",
+              "type": "max",
+              "hex": "#F95F53",
+              "value": 100
+            }
+          ],
+          "prefix": "",
+          "suffix": "",
+          "decimalPlaces": {
+            "isEnforced": true,
+            "digits": 2
+          },
+          "tickPrefix": "",
+          "tickSuffix": "",
+          "width": 4,
+          "height": 4,
+          "xPos": 0,
+          "yPos": 20
+        },
+        {
+          "kind": "Xy",
+          "name": "capacitancia - Histórico",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> filter(fn: (r) => r._field == \"capacitancia\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "capacitancia",
+              "base": "10",
+              "scale": "linear"
+            }
+          ],
+          "geom": "line",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 8,
+          "height": 4,
+          "xPos": 4,
+          "yPos": 20
+        },
+        {
+          "kind": "Table",
+          "name": "Auditoria - Último valor por variável",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"sensores_analogicos\")\n  |> last()\n  |> keep(columns: [\"_time\", \"_field\", \"_value\"])\n  |> group()\n  |> sort(columns: [\"_field\"])"
+            }
+          ],
+          "colors": [
+            {
+              "name": "laser",
+              "type": "text",
+              "hex": "#00C9FF",
+              "value": 0
+            }
+          ],
+          "decimalPlaces": {
+            "isEnforced": true,
+            "digits": 2
+          },
+          "tableOptions": {
+            "verticalTimeAxis": true,
+            "sortBy": "_time",
+            "wrapping": "",
+            "fixFirstColumn": false
+          },
+          "timeFormat": "YYYY-MM-DD HH:mm:ss",
+          "width": 12,
+          "height": 6,
+          "xPos": 0,
+          "yPos": 24
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,813 @@
+[
+  {
+    "apiVersion": "influxdata.com/v2alpha1",
+    "kind": "Dashboard",
+    "metadata": {
+      "name": "dashboard-clp-io"
+    },
+    "spec": {
+      "name": "Dashboard CLP IO",
+      "description": "Entradas/saídas do CLP - DADOS_AUTOMAZOOM",
+      "charts": [
+        {
+          "kind": "Xy",
+          "name": "status_emer",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"status_emer\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "status_emer",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 0,
+          "yPos": 0
+        },
+        {
+          "kind": "Xy",
+          "name": "status_liga",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"status_liga\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "status_liga",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 6,
+          "yPos": 0
+        },
+        {
+          "kind": "Xy",
+          "name": "status_desliga",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"status_desliga\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "status_desliga",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 0,
+          "yPos": 3
+        },
+        {
+          "kind": "Xy",
+          "name": "status_reset",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"status_reset\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "status_reset",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 6,
+          "yPos": 3
+        },
+        {
+          "kind": "Xy",
+          "name": "status_do0_inv",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"status_do0_inv\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "status_do0_inv",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 0,
+          "yPos": 6
+        },
+        {
+          "kind": "Xy",
+          "name": "status_do2_inv",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"status_do2_inv\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "status_do2_inv",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 6,
+          "yPos": 6
+        },
+        {
+          "kind": "Xy",
+          "name": "led_liga",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"led_liga\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "led_liga",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 0,
+          "yPos": 9
+        },
+        {
+          "kind": "Xy",
+          "name": "led_desliga",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"led_desliga\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "led_desliga",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 6,
+          "yPos": 9
+        },
+        {
+          "kind": "Xy",
+          "name": "led_reset",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"led_reset\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "led_reset",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 0,
+          "yPos": 12
+        },
+        {
+          "kind": "Xy",
+          "name": "aciona_valvula",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"aciona_valvula\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "aciona_valvula",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 6,
+          "yPos": 12
+        },
+        {
+          "kind": "Xy",
+          "name": "rele_2",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"rele_2\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "rele_2",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 0,
+          "yPos": 15
+        },
+        {
+          "kind": "Xy",
+          "name": "rele_3",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"rele_3\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "rele_3",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 6,
+          "yPos": 15
+        },
+        {
+          "kind": "Xy",
+          "name": "di0_inv",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"di0_inv\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "di0_inv",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 0,
+          "yPos": 18
+        },
+        {
+          "kind": "Xy",
+          "name": "di2_inv",
+          "queries": [
+            {
+              "query": "from(bucket: \"DADOS_AUTOMAZOOM\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"clp_io\")\n  |> filter(fn: (r) => r._field == \"di2_inv\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"last\")"
+            }
+          ],
+          "axes": [
+            {
+              "name": "x",
+              "label": "",
+              "base": "10",
+              "scale": "linear"
+            },
+            {
+              "name": "y",
+              "label": "di2_inv",
+              "base": "10",
+              "scale": "linear",
+              "domain": [
+                -0.1,
+                1.1
+              ]
+            }
+          ],
+          "geom": "step",
+          "xCol": "_time",
+          "yCol": "_value",
+          "position": "overlaid",
+          "shade": false,
+          "colors": [
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#440154",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#31688E",
+              "value": 0
+            },
+            {
+              "name": "viridis",
+              "type": "scale",
+              "hex": "#35B779",
+              "value": 0
+            }
+          ],
+          "legendOpacity": 1.0,
+          "width": 6,
+          "height": 3,
+          "xPos": 6,
+          "yPos": 18
+        }
+      ]
+    }
+  }
+]

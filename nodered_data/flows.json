@@ -26,99 +26,99 @@
         "name": "",
         "vartable": [
             {
-                "addr": "DB1,INT0",
-                "name": "LT3023_NIVEL"
+                "addr": "DB1,REAL0",
+                "name": "Nivel"
             },
             {
-                "addr": "DB1,INT2",
-                "name": "LT3023_TEMPERATURA"
+                "addr": "DB1,REAL4",
+                "name": "Temperatura"
             },
             {
-                "addr": "DB1,INT4",
-                "name": "DP2200_CORRENTE"
+                "addr": "DB1,REAL8",
+                "name": "DP2200_LEITURA"
             },
             {
-                "addr": "DB1,INT6",
+                "addr": "DB1,WORD12",
                 "name": "DP2200_STATUS"
             },
             {
-                "addr": "DB1,INT8",
+                "addr": "DB1,REAL14",
                 "name": "PN2594_PRESSAO"
             },
             {
-                "addr": "DB1,X10.0",
-                "name": "PN2594_SP1"
-            },
-            {
-                "addr": "DB1,X10.1",
-                "name": "PN2594_OUT_2"
-            },
-            {
-                "addr": "DB1,X10.2",
-                "name": "LMT100_NA"
-            },
-            {
-                "addr": "DB1,X10.3",
-                "name": "LMT100_NF"
-            },
-            {
-                "addr": "DB1,INT12",
+                "addr": "DB1,WORD18",
                 "name": "LMT100_CAPACITANCIA"
             },
             {
-                "addr": "I1.0",
+                "addr": "DB1,X20.0",
+                "name": "PN2594_83"
+            },
+            {
+                "addr": "DB1,X20.1",
+                "name": "PN2594_83_1"
+            },
+            {
+                "addr": "DB1,X20.2",
+                "name": "LMT100_NA"
+            },
+            {
+                "addr": "DB1,X20.3",
+                "name": "LMT100_NF"
+            },
+            {
+                "addr": "DB1,X20.4",
                 "name": "STATUS_B_EMER"
             },
             {
-                "addr": "I1.1",
+                "addr": "DB1,X20.5",
                 "name": "STATUS_B_LIGA"
             },
             {
-                "addr": "I1.2",
+                "addr": "DB1,X20.6",
                 "name": "STATUS_B_DESLIGA"
             },
             {
-                "addr": "I1.3",
+                "addr": "DB1,X20.7",
                 "name": "STATUS_B_RESET"
             },
             {
-                "addr": "I1.4",
-                "name": "STATUS_DO0_INV"
+                "addr": "DB1,X21.0",
+                "name": "STATUS_DOO_INV"
             },
             {
-                "addr": "I1.5",
+                "addr": "DB1,X21.1",
                 "name": "STATUS_DO2_INV"
             },
             {
-                "addr": "Q0.0",
+                "addr": "DB1,X21.2",
                 "name": "LED_B_LIGA"
             },
             {
-                "addr": "Q0.1",
+                "addr": "DB1,X21.3",
                 "name": "LED_B_DESLIGA"
             },
             {
-                "addr": "Q0.2",
+                "addr": "DB1,X21.4",
                 "name": "LED_B_RESET"
             },
             {
-                "addr": "Q0.3",
+                "addr": "DB1,X21.5",
                 "name": "ACIONA_VALVULA"
             },
             {
-                "addr": "Q0.4",
+                "addr": "DB1,X21.6",
                 "name": "RELE_INTERFACE_2"
             },
             {
-                "addr": "Q0.5",
+                "addr": "DB1,X21.7",
                 "name": "RELE_INTERFACE_3"
             },
             {
-                "addr": "Q0.6",
-                "name": "DI0_INV"
+                "addr": "DB1,X22.0",
+                "name": "DIO_INV"
             },
             {
-                "addr": "Q0.7",
+                "addr": "DB1,X22.1",
                 "name": "DI2_INV"
             }
         ]
