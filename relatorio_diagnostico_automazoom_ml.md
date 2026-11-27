@@ -1,6 +1,6 @@
 # 🤖 RELATÓRIO DE DIAGNÓSTICO VIA MACHINE LEARNING (v5)
 **Bancada de Ensaios Automazoom — Sistema Inteligente de Automação**  
-*Modelo Utilizado:* Isolation Forest (Scikit-Learn) | *Data:* 26/11/2026 21:46:25  
+*Modelo Utilizado:* Isolation Forest (Scikit-Learn) | *Data:* 27/11/2026 10:45:03  
 *Bucket InfluxDB:* `DADOS_AUTOMAZOOM` | *Organização:* `SENAI_TTAUT`
 
 ---
@@ -9,16 +9,16 @@
 
 | Parâmetro de Avaliação | Resultado Obtido pelo Algoritmo |
 | :--- | :--- |
-| **Diagnóstico do Modelo ML** | **ALERTA CRÍTICO: ANOMALIA DETECTADA VIA MACHINE LEARNING** |
-| **Nível de Severidade** | **ALTA** |
-| **Taxa de Anomalia Detectada** | **`77.2%`** (`475/615` pontos) |
-| **Score Médio de Anomalia (ML)**| `-0.5936` |
-| **Duração da Batelada Avaliada**| `614.0 s` (`615` amostras) |
-| **Variação no Tempo $t_s$** | `28.5 s` (`+103.6%` em relação ao baseline) |
-| **Variação de Esforço (RPM)** | `2380.0 RPM` (`+28.6%` em relação ao baseline) |
+| **Diagnóstico do Modelo ML** | **NOMINAL: COMPORTAMENTO RECONHECIDO PELO MODELO DE ML** |
+| **Nível de Severidade** | **NORMAL** |
+| **Taxa de Anomalia Detectada** | **`1.6%`** (`9/552` pontos) |
+| **Score Médio de Anomalia (ML)**| `-0.3958` |
+| **Duração da Batelada Avaliada**| `637.6 s` (`552` amostras) |
+| **Variação no Tempo $t_s$** | `38.3 s` (`+1.0%` em relação ao baseline) |
+| **Variação de Esforço (RPM)** | `717.6 RPM` (`+0.0%` em relação ao baseline) |
 
 ### 🔍 Parecer Técnico Automatizado (Machine Learning)
-> **O modelo de Machine Learning (Isolation Forest) classificou 77.2% dos pontos temporais da batelada como anômalos (475/615 amostras). Foi identificado um desvio estatístico severo na assinatura hidráulica do processo.**
+> **O modelo de ML validou a batelada atual com apenas 1.6% de discrepância. O padrão de funcionamento corresponde com alta fidelidade ao baseline de treinamento.**
 
 ---
 
@@ -33,14 +33,14 @@ A principal vantagem deste módulo de **Machine Learning Não Supervisionado (Is
 
 ## 3. COMPARATIVO DAS GRANDEZAS FÍSICAS (DESVIOS DO BASELINE)
 
-| Grandeza Medida                      | Batelada Padrão (Treinamento ML) | Batelada Atual (Inferência ML) | Desvio Relativo (%) |
-| :----------------------------------- | :------------------------------: | :----------------------------: | :-----------------: |
-| **Tempo de Estabilização ($t_s$)**   |             `14.0 s`             |            `28.5 s`            |    **`+103.6%`**    |
-| **Rotação Média da Bomba**           |           `1850.2 RPM`           |          `2380.0 RPM`          |    **`+28.6%`**     |
-| **Esforço Acumulado (Integral RPM)** |         `1135999 RPM·s`          |        `1461315 RPM·s`         |    **`+28.6%`**     |
-| **Pressão no Recalque (PN2594)**     |            `1.25 bar`            |           `0.98 bar`           |    **`-21.6%`**     |
-| **Erro Acumulado (IAE)**             |          `1048.3 mm·s`           |         `1742.1 mm·s`          |    **`+66.2%`**     |
-| **Temperatura Média do Fluido**      |            `23.8 °C`             |           `24.8 °C`            |     **`+4.2%`**     |
+| Grandeza Medida | Batelada Padrão (Treinamento ML) | Batelada Atual (Inferência ML) | Desvio Relativo (%) |
+| :--- | :---: | :---: | :---: |
+| **Tempo de Estabilização ($t_s$)** | `38.0 s` | `38.3 s` | **`+1.0%`** |
+| **Rotação Média da Bomba** | `717.6 RPM` | `717.6 RPM` | **`+0.0%`** |
+| **Esforço Acumulado (Integral RPM)** | `449006 RPM·s` | `448465 RPM·s` | **`-0.1%`** |
+| **Pressão no Recalque (PN2594)** | `0.08 bar` | `0.08 bar` | **`-1.1%`** |
+| **Erro Acumulado (IAE)** | `1486.9 mm·s` | `1519.1 mm·s` | **`+2.2%`** |
+| **Temperatura Média do Fluido** | `24.2 °C` | `24.2 °C` | **`+0.2%`** |
 
 ---
 

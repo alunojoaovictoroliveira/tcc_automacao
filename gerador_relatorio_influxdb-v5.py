@@ -22,7 +22,8 @@ from sklearn.preprocessing import StandardScaler
 # ==============================================================================
 # 1. CONFIGURAÇÕES E PARÂMETROS DO INFLUXDB
 # ==============================================================================
-INFLUX_URL = os.getenv("INFLUX_URL", "http://localhost:8086")
+
+INFLUX_URL = os.getenv("INFLUX_URL", "http://influxdb_clp:8086")
 INFLUX_ORG = os.getenv("INFLUX_ORG", "SENAI_TTAUT")
 INFLUX_BUCKET = os.getenv("INFLUX_BUCKET", "DADOS_AUTOMAZOOM")
 INFLUX_TOKEN = os.getenv("INFLUX_TOKEN", "TOKEN_TCC_SENAI_AUTOMACAO")
@@ -87,7 +88,7 @@ def buscar_dados_influx(tipo_ensaio="padrao", horas_atras=24):
             # comment="#" descarta linhas de cabeçalho do InfluxDB (#datatype, #group, #default)
             df = pd.read_csv(io.StringIO(response.text), comment="#")
             if not df.empty and "_time" in df.columns:
-                df["_time"] = pd.to_datetime(df["_time"])
+                df["_time"] = pd.to_datetime(df["_time"], format="ISO8601")
                 
                 # Preenchimento temporal para tratar desencontros de milissegundos do S7
                 df = df.ffill().bfill()
